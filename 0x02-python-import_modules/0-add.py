@@ -1,9 +1,12 @@
 #!/usr/bin/python3
-a = 1
-b = 2
+if __name__ == "__main__":
+    from add_0 import add
 
-# Import the add function from add_0.py
-exec(open("add_0.py").read())
+    a = 1
+    b = 2
 
-# Use the add function and print the result using string formatting
-print("{} + {} = {}".format(a, b, add(a, b)))
+    # Import the add function from add_0.py
+    exec(open("add_0.py").read())
+
+    # Use the add function and print the result using string formatting
+    print("{} + {} = {}".format(a, b, add(a, b)))
