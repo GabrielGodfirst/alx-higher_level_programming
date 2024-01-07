@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+def add_integer(a, b=98):
+    """
+    Adds two integers.
+
+    Parameters:
+    - a (int or float): The first number.
+    - b (int or float): The second number, which is 98 on default.
+
+    Returns:
+    int: The sum of a and b, both casted to integers.
+
+    Examples:
+    >>> add_integer(1, 2)
+    3
+
+    >>> add_integer(100, -2)
+    98
+
+    >>> add_integer(2)
+    100
+
+    >>> add_integer(100.3, -2)
+    98
+
+    """
+    # Check if a is an integer or float, and raise TypeError if not
+    if not isinstance(a, (int, float)):
+        raise TypeError("a must be an integer")
+
+    # Check if b is an integer or float, and raise TypeError if not
+    if not isinstance(b, (int, float)):
+        raise TypeError("b must be an integer")
+
+    # Cast a and b to integers if they are floats
+    a = int(a) if isinstance(a, float) else a
+    b = int(b) if isinstance(b, float) else b
+
+    # Return the sum of a and b as an integer
+    return int(a + b)
+
+# Run the doctests
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
