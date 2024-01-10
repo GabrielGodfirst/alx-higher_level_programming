@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+
+def matrix_divided(matrix, div):
+
+    """
+    Divide all elements of a matrix.
+
+    Args:
+        matrix (list): A list of lists of ints or floats.
+        div (int/float): The divisor.
+
+    Raises:
+        TypeError: If the matrix contains non-numbers.
+        TypeError: If the matrix contains rows of different sizes.
+        TypeError: If div is not an int or float.
+        ZeroDivisionError: If div is 0.
+
+    Returns:
+        list: A new matrix representing the result of the division.
+
+    Examples:
+        >>> matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        >>> divisor = 2
+        >>> matrix_divided(matrix, divisor)
+        [[0.5, 1.0, 1.5], [2.0, 2.5, 3.0], [3.5, 4.0, 4.5]]
+
+        >>> matrix = [[10, 20, 30], [40, 50, 60], [70, 80, 90]]
+        >>> divisor = 10
+        >>> matrix_divided(matrix, divisor)
+        [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]
+
+        >>> matrix_divided([[1, 2], [3, 4]], 0)
+        Traceback (most recent call last):
+            ...
+        ZeroDivisionError: division by zero
+
+        >>> matrix_divided([[1, 2], [3, 'a']], 2)
+        Traceback (most recent call last):
+            ...
+        TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+        >>> matrix_divided([[1, 2], [3, 4, 5]], 2)
+        Traceback (most recent call last):
+            ...
+        TypeError: Each row of the matrix must have the same size
+
+        """
+    # Function implementation goes here
+    return [[round(ele / div, 2) for ele in row] for row in matrix]
+
+# Run the doctest
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
