@@ -1,0 +1,67 @@
+#!/usr/bin/python3
+
+"""
+This module contains a function that prints
+a text with 2 new lines after each of the characters: ., ? and :
+"""
+
+
+def text_indentation(text):
+
+    """
+    Print a text with 2 new lines after each of the characters: ., ? and :
+
+    Args:
+        text (str): The input text.
+
+    Raises:
+        TypeError: If text is not a string.
+
+    Returns:
+        None
+
+    Examples:
+        >>> text_indentation("A sample text. It has multiple sentences.")
+        This is a sample text
+        It has multiple sentences
+        How does it handle
+        Let's see
+
+        >>> text_indentation("NoPunctuation")
+        NoPunctuation
+
+        >>> text_indentation(123)
+        Traceback (most recent call last):
+            ...
+        TypeError: text must be a string
+    """
+    # Input Validation
+    if not isinstance(text, str):
+        raise TypeError("text must be a string")
+
+    # Process and print the text
+    lines = []
+    current_line = ""
+
+    for char in text:
+        current_line += char
+
+        if char in ('.', '?', ':'):
+            lines.append(current_line.strip())
+            current_line = ""
+
+    # Add the last line if not empty
+    if current_line.strip():
+        lines.append(current_line.strip())
+
+    # Print the processed text
+    for line in lines:
+        print(line)
+        print()
+
+# Run the doctest
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
