@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Defines a base class and its functions"""
 
 class Base:
     """
