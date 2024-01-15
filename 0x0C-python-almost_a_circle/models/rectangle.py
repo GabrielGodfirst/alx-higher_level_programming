@@ -6,12 +6,12 @@ from models.base import Base
 
 
 class Rectangle(Base):
+
     """
     Rectangle class that inherits from the Base class.
     """
 
     def __init__(self, width, height, x=0, y=0, id=None):
-
         """
         Class constructor for Rectangle.
 
@@ -20,14 +20,13 @@ class Rectangle(Base):
             height (int): Height of the rectangle.
             x (int, optional): X-coordinate of the rectangle's position.
             y (int, optional): Y-coordinate of the rectangle's position.
-            id (int, optional): Identifier for the rectangle.
-            If None, the base class logic is used.
+            id (int, optional): Identifier for the rectangle. If None,
+            the base class logic is used.
 
         Note:
             The super() call is used to invoke
             the constructor of the Base class.
         """
-
         super().__init__(id)
         self.width = width
         self.height = height
@@ -196,7 +195,6 @@ class Rectangle(Base):
             print(" " * self.__x + "#" * self.__width)
 
     def __str__(self):
-
         """
         Override the __str__ method to return the string representation.
 
@@ -204,6 +202,6 @@ class Rectangle(Base):
             str: Formatted string representation of the Rectangle instance.
         """
         return (
-                f"[Rectangle]({self.id}){self.__x}/{self.__y} - "
-                f"{self.__width}/{self.__height}"
-                )
+            f"[Rectangle] ({self.id}) {self.__x}/{self.__y} - "
+            f"{self.__width}/{self.__height}"
+        )
