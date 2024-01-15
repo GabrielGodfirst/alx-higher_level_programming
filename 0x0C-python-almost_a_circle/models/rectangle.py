@@ -1,7 +1,12 @@
+#!/usr/bin/python3
+
+"""Defines a rectangle wit some other functionalities"""
+
 from models.base import Base
 
 
 class Rectangle(Base):
+
     """
     Rectangle class that inherits from the Base class.
     """
@@ -16,6 +21,7 @@ class Rectangle(Base):
             x (int, optional): X-coordinate of the rectangle's position.
             y (int, optional): Y-coordinate of the rectangle's position.
             id (int, optional): Identifier for the rectangle.
+            If None, the base class logic is used.
 
         Note:
             The super() call is used to invoke
@@ -178,3 +184,12 @@ class Rectangle(Base):
             int: Area of the rectangle.
         """
         return self.__width * self.__height
+
+    def display(self):
+        """
+        Print the Rectangle instance using '#' character.
+        """
+        for _ in range(self.__y):
+            print()
+        for _ in range(self.__height):
+            print(" " * self.__x + "#" * self.__width)
