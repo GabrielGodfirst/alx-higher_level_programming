@@ -19,8 +19,8 @@ class Rectangle(Base):
             height (int): Height of the rectangle.
             x (int, optional): X-coordinate of the rectangle's position.
             y (int, optional): Y-coordinate of the rectangle's position.
-            id (int, optional): Identifier for the rectangle. If None,
-            the base class logic is used.
+            id (int, optional): Identifier for the rectangle.
+            If None, the base class logic is used.
 
         Note:
             The super() call is used to invoke
@@ -201,27 +201,47 @@ class Rectangle(Base):
             str: Formatted string representation of the Rectangle instance.
         """
         return (
-            f"[Rectangle] ({self.id}) {self.__x}/{self.__y} - "
-            f"{self.__width}/{self.__height}"
+            f"[Rectangle] ({self.__x}) {self.__y}/{self.id} - "
+            f"{self.__height}/{self.__width}"
         )
 
     def update(self, *args, **kwargs):
         """
-        Update the attributes of the Rectangle.
+        Assign attributes to the Rectangle instance.
 
         Args:
-            *args: Arguments to update the attributes in the order:
-                   1st argument: id attribute
-                   2nd argument: width attribute
-                   3rd argument: height attribute
-                   4th argument: x attribute
-                   5th argument: y attribute
-            **kwargs: Key-value pairs to update the attributes.
+            *args: List of non-keyworded arguments.
+                1st argument: id attribute
+                2nd argument: width attribute
+                3rd argument: height attribute
+                4th argument: x attribute
+                5th argument: y attribute
+            **kwargs: Double pointer to a dictionary
+            representing key/value pairs.
+                Each key represents an attribute to be assigned.
+
+        Note:
+            **kwargs is skipped if *args exists and is not empty.
         """
         if args:
-            attrs = ['id', 'width', 'height', 'x', 'y']
-            for attr, value in zip(attrs, args):
-                setattr(self, attr, value)
+            attr_list = ["x", "y", "id", "height", "width"]
+            for attr, val in zip(attr_list, args):
+                setattr(self, attr, val)
         elif kwargs:
             for key, value in kwargs.items():
                 setattr(self, key, value)
+
+    def to_dictionary(self):
+        """
+        Return the dictionary representation of the Rectangle.
+
+        Returns:
+            dict: Dictionary containing attributes of the Rectangle instance.
+        """
+        return {
+            'id': self.id,
+            'width': self.__width,
+            'height': self.__height,
+            'x': self.__x,
+            'y': self.__y
+        }
