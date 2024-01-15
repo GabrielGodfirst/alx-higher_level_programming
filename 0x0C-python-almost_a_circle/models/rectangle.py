@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 
-"""Defines a rectangle wit some other functionalities"""
+"""Defines the rectangle class and its function"""
 
 from models.base import Base
 
 
 class Rectangle(Base):
-
     """
     Rectangle class that inherits from the Base class.
     """
 
     def __init__(self, width, height, x=0, y=0, id=None):
+
         """
         Class constructor for Rectangle.
 
@@ -27,6 +27,7 @@ class Rectangle(Base):
             The super() call is used to invoke
             the constructor of the Base class.
         """
+
         super().__init__(id)
         self.width = width
         self.height = height
@@ -193,3 +194,16 @@ class Rectangle(Base):
             print()
         for _ in range(self.__height):
             print(" " * self.__x + "#" * self.__width)
+
+    def __str__(self):
+
+        """
+        Override the __str__ method to return the string representation.
+
+        Returns:
+            str: Formatted string representation of the Rectangle instance.
+        """
+        return (
+                f"[Rectangle]({self.id}){self.__x}/{self.__y} - "
+                f"{self.__width}/{self.__height}"
+                )
