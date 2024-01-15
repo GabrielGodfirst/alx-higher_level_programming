@@ -6,7 +6,6 @@ from models.base import Base
 
 
 class Rectangle(Base):
-
     """
     Rectangle class that inherits from the Base class.
     """
@@ -205,3 +204,20 @@ class Rectangle(Base):
             f"[Rectangle] ({self.id}) {self.__x}/{self.__y} - "
             f"{self.__width}/{self.__height}"
         )
+
+    def update(self, *args):
+        """
+        Update the attributes of the Rectangle.
+
+        Args:
+            *args: Arguments to update the attributes in the order:
+                   1st argument: id attribute
+                   2nd argument: width attribute
+                   3rd argument: height attribute
+                   4th argument: x attribute
+                   5th argument: y attribute
+        """
+        if args:
+            attrs = ['id', 'width', 'height', 'x', 'y']
+            for attr, value in zip(attrs, args):
+                setattr(self, attr, value)
