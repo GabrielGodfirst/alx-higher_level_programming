@@ -12,7 +12,6 @@ class Square(Rectangle):
     """
 
     def __init__(self, size, x=0, y=0, id=None):
-
         """
         Class constructor for Square.
 
@@ -29,6 +28,20 @@ class Square(Rectangle):
         """
         super().__init__(size, size, x, y, id)
 
+    def to_dictionary(self):
+        """
+        Return the dictionary representation of the Square.
+
+        Returns:
+            dict: Dictionary containing attributes of the Square instance.
+        """
+        return {
+            'id': self.id,
+            'size': self.width,  # Size attribute is represented by the width
+            'x': self.x,
+            'y': self.y
+        }
+
     def update(self, *args, **kwargs):
         """
         Update attributes of the Square instance.
@@ -44,7 +57,8 @@ class Square(Rectangle):
             attrs = ["id", "size", "x", "y"]
             for i, arg in enumerate(args[:len(attrs)]):
                 setattr(self, attrs[i], arg)
-        elif kwargs:
+
+        if kwargs and not args:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -56,6 +70,6 @@ class Square(Rectangle):
             str: Formatted string representation of the Square instance.
         """
         return (
-                 f"[Square] ({self.id}) {self.x}/{self.y} - "
-                 f"{self.width}"
-                  )
+            f"[Square] ({self.id}) {self.x}/{self.y} - "
+            f"{self.width}"
+        )
