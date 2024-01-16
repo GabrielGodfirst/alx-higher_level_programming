@@ -1,9 +1,11 @@
 #!/usr/bin/python3
+
+import json
+
 """Defines a base class and its functions"""
 
 
 class Base:
-
     """
     Base class for managing id attribute in future classes.
     """
@@ -24,3 +26,18 @@ class Base:
         else:
             Base.__nb_objects += 1
             self.id = Base.__nb_objects
+
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """
+        Convert a list of dictionaries to a JSON string.
+
+        Args:
+            list_dictionaries (list): List of dictionaries.
+
+        Returns:
+            str: JSON string representation of list_dictionaries.
+        """
+        if list_dictionaries is None or len(list_dictionaries) == 0:
+            return "[]"
+        return json.dumps(list_dictionaries)
