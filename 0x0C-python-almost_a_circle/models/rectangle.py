@@ -34,197 +34,93 @@ class Rectangle(Base):
 
     @property
     def width(self):
-        """
-        Getter for the width attribute.
-
-        Returns:
-            int: Width of the rectangle.
-        """
+        """Getter for the width attribute."""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """
-        Setter for the width attribute.
-
-        Args:
-            value (int): New width value.
-
-        Raises:
-            TypeError: If the input is not an integer.
-            ValueError: If width is <= 0.
-        """
+        """Setter for the width attribute."""
         self.validate_non_negative_integer(value, 'width')
+        if value <= 0:
+            raise ValueError("[ValueError] width must be > 0")
         self.__width = value
 
     @property
     def height(self):
-        """
-        Getter for the height attribute.
-
-        Returns:
-            int: Height of the rectangle.
-        """
+        """Getter for the height attribute."""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """
-        Setter for the height attribute.
-
-        Args:
-            value (int): New height value.
-
-        Raises:
-            TypeError: If the input is not an integer.
-            ValueError: If height is <= 0.
-        """
+        """Setter for the height attribute."""
         self.validate_non_negative_integer(value, 'height')
+        if value <= 0:
+            raise ValueError("[ValueError] height must be > 0")
         self.__height = value
 
     @property
     def x(self):
-        """
-        Getter for the x attribute.
-
-        Returns:
-            int: X-coordinate of the rectangle's position.
-        """
+        """Getter for the x attribute."""
         return self.__x
 
     @x.setter
     def x(self, value):
-        """
-        Setter for the x attribute.
-
-        Args:
-            value (int): New x-coordinate value.
-
-        Raises:
-            TypeError: If the input is not an integer.
-            ValueError: If x is < 0.
-        """
-        self.validate_non_negative(value, 'x')
+        """Setter for the x attribute."""
+        self.validate_non_negative_integer(value, 'x')
+        if value < 0:
+            raise ValueError("[ValueError] x must be >= 0")
         self.__x = value
 
     @property
     def y(self):
-        """
-        Getter for the y attribute.
-
-        Returns:
-            int: Y-coordinate of the rectangle's position.
-        """
+        """Getter for the y attribute."""
         return self.__y
 
     @y.setter
     def y(self, value):
-        """
-        Setter for the y attribute.
-
-        Args:
-            value (int): New y-coordinate value.
-
-        Raises:
-            TypeError: If the input is not an integer.
-            ValueError: If y is < 0.
-        """
-        self.validate_non_negative(value, 'y')
+        """Setter for the y attribute."""
+        self.validate_non_negative_integer(value, 'y')
+        if value < 0:
+            raise ValueError("[ValueError] y must be >= 0")
         self.__y = value
 
     def validate_non_negative_integer(self, value, attribute_name):
-        """
-        Validate that the input is a non-negative integer.
-
-        Args:
-            value: Input value to be validated.
-            attribute_name (str): Name of the attribute for error message.
-
-        Raises:
-            TypeError: If the input is not an integer.
-            ValueError: If the input is not a non-negative integer.
-        """
+        """Validate that the input is a non-negative integer."""
         self.validate_integer(value, attribute_name)
         self.validate_non_negative(value, attribute_name)
 
     def validate_integer(self, value, attribute_name):
-        """
-        Validate that the input is an integer.
-
-        Args:
-            value: Input value to be validated.
-            attribute_name (str): Name of the attribute for error message.
-
-        Raises:
-            TypeError: If the input is not an integer.
-        """
+        """Validate that the input is an integer."""
         if not isinstance(value, int):
-            raise TypeError(f"{attribute_name} must be an integer")
+            raise TypeError(f"[TypeError] {attribute_name} must be an integer")
 
     def validate_non_negative(self, value, attribute_name):
-        """
-        Validate that the input is greater than or equal to 0.
-
-        Args:
-            value: Input value to be validated.
-            attribute_name (str): Name of the attribute for error message.
-
-        Raises:
-            ValueError: If the input is < 0.
-        """
+        """Validate that the input is greater than or equal to 0."""
         if value < 0:
-            raise ValueError(f"{attribute_name} must be >= 0")
+            raise ValueError(f"[ValueError] {attribute_name} must be >= 0")
 
     def area(self):
-        """
-        Calculate and return the area of the rectangle.
-
-        Returns:
-            int: Area of the rectangle.
-        """
+        """Calculate and return the area of the rectangle."""
         return self.__width * self.__height
 
     def display(self):
-        """
-        Print the Rectangle instance using '#' character.
-        """
+        """Print the Rectangle instance using '#' character."""
         for _ in range(self.__y):
             print()
         for _ in range(self.__height):
             print(" " * self.__x + "#" * self.__width)
 
     def __str__(self):
-        """
-        Override the __str__ method to return the string representation.
-
-        Returns:
-            str: Formatted string representation of the Rectangle instance.
-        """
+        """Override the __str__ method to return the string representation."""
         return (
-            f"[Rectangle] ({self.__x}) {self.__y}/{self.id} - "
-            f"{self.__height}/{self.__width}"
+            f"[Rectangle] ({self.id}) {self.__x}/{self.__y} - "
+            f"{self.__width}/{self.__height}"
         )
 
     def update(self, *args, **kwargs):
-        """
-        Assign attributes to the Rectangle instance.
-
-        Args:
-            *args: List of non-keyworded arguments.
-                1st argument: id attribute
-                2nd argument: width attribute
-                3rd argument: height attribute
-                4th argument: x attribute
-                5th argument: y attribute
-            **kwargs: Double pointer to a dictionary
-            representing key/value pairs.
-                Each key represents an attribute to be assigned.
-
-        Note:
-            **kwargs is skipped if *args exists and is not empty.
-        """
+        """Assign attributes to the Rectangle instance."""
         if args:
-            attr_list = ["x", "y", "id", "height", "width"]
+            attr_list = ["id", "width", "height", "x", "y"]
             for attr, val in zip(attr_list, args):
                 setattr(self, attr, val)
         elif kwargs:
@@ -232,12 +128,7 @@ class Rectangle(Base):
                 setattr(self, key, value)
 
     def to_dictionary(self):
-        """
-        Return the dictionary representation of the Rectangle.
-
-        Returns:
-            dict: Dictionary containing attributes of the Rectangle instance.
-        """
+        """Return the dictionary representation of the Rectangle."""
         return {
             'id': self.id,
             'width': self.__width,
