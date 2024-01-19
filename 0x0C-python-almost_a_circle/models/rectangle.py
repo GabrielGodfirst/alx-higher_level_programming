@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import csv
 from models.base import Base
 
 
@@ -134,3 +135,64 @@ class Rectangle(Base):
             'x': self.__x,
             'y': self.__y
         }
+
+    def to_csv(self):
+        """
+        Return the CSV representation of the instance.
+
+        Returns:
+            list: List of values for CSV.
+        """
+        return [self.id, self.__width, self.__height, self.__x, self.__y]
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """
+        Save a list of instances to a file in CSV format.
+        Args:
+        list_objs (list): List of instances.
+        Note:
+        The filename is determined based on the class name.
+
+        """
+        if list_objs is None:
+            list_objs = []
+        filename = f"{cls.__name__}.csv"
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            for obj in list_objs:
+                writer.writerow(obj.to_csv())
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """
+        Load instances from a CSV file.
+        Returns:
+        list: List of instances.
+
+        """
+        filename = f"{cls.__name__}.csv"
+        try:
+            with open(filename, 'r') as file:
+                reader = csv.reader(file)
+                instances = []
+                for row in reader:
+                    id, width, height, x, y = map(int, row)
+                    instance = cls.create(id=id, width=width,
+                                          height=height, x=x, y=y)
+                    instances.append(instance)
+                return instances
+        except FileNotFoundError:
+            return []
+
+    @classmethod
+    def create(cls, *args, **kwargs):
+        """
+        Create an instance with all attributes already set.
+        **kwargs can be thought of as a double pointer to a dictionary.
+        To use the update method to assign all attributes, you must create a
+        “dummy” instance before:
+        """
+        instance = cls(1, 1)
+        instance.update(*args, **kwargs)
+        return instance
