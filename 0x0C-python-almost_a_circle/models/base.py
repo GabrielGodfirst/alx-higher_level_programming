@@ -8,7 +8,7 @@ class Base:
     Base class for managing id attribute in future classes.
     """
 
-    __nb_objects = 0  # private class attribute
+    __nb_objects = 0
 
     def __init__(self, id=None):
         """
@@ -25,21 +25,6 @@ class Base:
         else:
             Base.__nb_objects += 1
             self.id = Base.__nb_objects
-
-    @staticmethod
-    def to_json_string(list_dictionaries):
-        """
-        Convert a list of dictionaries to a JSON string.
-
-        Args:
-            list_dictionaries (list): List of dictionaries.
-
-        Returns:
-            str: JSON string representation of the list of dictionaries.
-        """
-        if list_dictionaries is None or len(list_dictionaries) == 0:
-            return "[]"
-        return json.dumps(list_dictionaries)
 
     @classmethod
     def save_to_file(cls, list_objs):
@@ -59,43 +44,6 @@ class Base:
             file.write(cls.to_json_string([obj.to_dictionary()
                                            for obj in list_objs]))
 
-    @staticmethod
-    def from_json_string(json_string):
-        """
-        Convert a JSON string to a list of dictionaries.
-
-        Args:
-            json_string (str): JSON string representation.
-
-        Returns:
-            list: List of dictionaries.
-        """
-        if json_string is None or json_string == "":
-            return []
-        return json.loads(json_string)
-
-    @classmethod
-    def create(cls, **dictionary):
-        """
-        Create an instance with attributes
-        set based on the provided dictionary.
-
-        Args:
-            **dictionary: Dictionary containing attribute values.
-
-        Returns:
-            cls: Instance of the class with attributes set.
-        """
-        if cls.__name__ == "Rectangle":
-            dummy_instance = cls(width=1, height=1)
-        elif cls.__name__ == "Square":
-            dummy_instance = cls(size=1)
-        else:
-            # Add conditions for other classes as needed
-            dummy_instance = cls()  # For a generic case
-        dummy_instance.update(**dictionary)
-        return dummy_instance
-
     @classmethod
     def load_from_file(cls):
         """
@@ -114,3 +62,51 @@ class Base:
                 return instances
         except FileNotFoundError:
             return []
+
+    @staticmethod
+    def to_json_string(list_dictionaries):
+        """
+        Return the JSON string representation of list_dictionaries.
+
+        Args:
+            list_dictionaries (list): List of dictionaries.
+
+        Returns:
+            str: JSON string.
+        """
+        if list_dictionaries is None or len(list_dictionaries) == 0:
+            return "[]"
+        return json.dumps(list_dictionaries)
+
+    @staticmethod
+    def from_json_string(json_string):
+        """
+        Return the list of dictionaries represented by the JSON string.
+
+        Args:
+            json_string (str): JSON string.
+
+        Returns:
+            list: List of dictionaries.
+        """
+        if json_string is None or len(json_string) == 0:
+            return []
+        return json.loads(json_string)
+
+    @classmethod
+    def create(cls, **dictionary):
+        """
+        Create an instance with all attributes already set.
+
+        Args:
+            **dictionary: Double pointer to a dictionary.
+
+        Returns:
+            cls: Instance of the class with attributes set.
+        """
+        if cls.__name__ == "Rectangle":
+            instance = cls(1, 1)  # Dummy instance
+        elif cls.__name__ == "Square":
+            instance = cls(1)  # Dummy instance
+        instance.update(**dictionary)
+        return instance
