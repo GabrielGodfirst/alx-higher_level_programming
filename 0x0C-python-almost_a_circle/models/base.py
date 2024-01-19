@@ -8,7 +8,7 @@ class Base:
     Base class for managing id attribute in future classes.
     """
 
-    __nb_objects = 0  # private class attribute
+    __nb_objects = 0
 
     def __init__(self, id=None):
         """
@@ -73,3 +73,41 @@ class Base:
         if json_string is None or json_string == "":
             return []
         return json.loads(json_string)
+
+    @classmethod
+    def create(cls, **dictionary):
+        """
+        Create an instance with attributes set based on
+        the provided dictionary.
+
+        Args:
+            **dictionary: Dictionary containing attribute values.
+
+        Returns:
+            cls: Instance of the class with attributes set.
+        """
+        if cls.__name__ == "Rectangle":
+            dummy_instance = cls(width=1, height=1)
+        elif cls.__name__ == "Square":
+            dummy_instance = cls(size=1)
+        else:
+            # Add conditions for other classes as needed
+            dummy_instance = cls()  # For a generic case
+        dummy_instance.update(**dictionary)
+        return dummy_instance
+
+    def update(self, *args, **kwargs):
+        """
+        Assign attributes to the instance.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
+        if args:
+            attr_list = ["id", "width", "height", "x", "y"]
+            for attr, val in zip(attr_list, args):
+                setattr(self, attr, val)
+        elif kwargs:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
