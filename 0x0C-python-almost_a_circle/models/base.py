@@ -8,7 +8,7 @@ class Base:
     Base class for managing id attribute in future classes.
     """
 
-    __nb_objects = 0
+    __nb_objects = 0  # private class attribute
 
     def __init__(self, id=None):
         """
@@ -77,8 +77,8 @@ class Base:
     @classmethod
     def create(cls, **dictionary):
         """
-        Create an instance with attributes set based on
-        the provided dictionary.
+        Create an instance with attributes
+        set based on the provided dictionary.
 
         Args:
             **dictionary: Dictionary containing attribute values.
@@ -96,18 +96,21 @@ class Base:
         dummy_instance.update(**dictionary)
         return dummy_instance
 
-    def update(self, *args, **kwargs):
+    @classmethod
+    def load_from_file(cls):
         """
-        Assign attributes to the instance.
+        Load instances from a file.
 
-        Args:
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
+        Returns:
+            list: List of instances.
         """
-        if args:
-            attr_list = ["id", "width", "height", "x", "y"]
-            for attr, val in zip(attr_list, args):
-                setattr(self, attr, val)
-        elif kwargs:
-            for key, value in kwargs.items():
-                setattr(self, key, value)
+        filename = f"{cls.__name__}.json"
+        try:
+            with open(filename, 'r') as file:
+                data = file.read()
+                dictionaries = cls.from_json_string(data)
+                instances = [cls.create(**dictionary)
+                             for dictionary in dictionaries]
+                return instances
+        except FileNotFoundError:
+            return []
