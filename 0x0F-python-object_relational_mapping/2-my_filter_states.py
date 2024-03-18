@@ -1,48 +1,27 @@
 #!/usr/bin/python3
 """
-This script connects to a MySQL server and retrieves data from the states table
-based on a given state name.
+Script that takes in an argument and displays all values
+in the states table of hbtn_0e_0_usa where name matches the argument
+but safe from MySQL injections!
 """
-
-import sys
 import MySQLdb
+from sys import argv
 
+# The code should not be executed when imported
+if __name__ == '__main__':
 
-def query_states():
-    """
-    Connects to a MySQL server and retrieves data from the states table based
-    on a given state name.
-    """
-    # Extracting command-line arguments
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-    state_name = sys.argv[4]
+    # make a connection to the database
+    db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                         passwd=argv[2], db=argv[3])
 
-    # Establishing connection to MySQL server
-    db = MySQLdb.connect(
-        host="localhost",
-        user=username,
-        passwd=password,
-        db=database,
-        port=3306
-    )
+    # It gives us the ability to have multiple seperate working environments
+    # through the same connection to the database.
+    cur = db.cursor()
+    cur.execute("SELECT * FROM states WHERE BINARY name = %s", [argv[4]])
 
-    cursor = db.cursor()
-
-    # Executing SQL query
-    cursor.execute(
-        "SELECT * FROM states WHERE name = %s ORDER BY id ASC", (state_name,)
-    )
-    data = cursor.fetchall()
-
-    # Displaying results
-    for row in data:
-        print(row)
-
-    cursor.close()
+    rows = cur.fetchall()
+    for i in rows:
+        print(i)
+    # Clean up process
+    cur.close()
     db.close()
-
-
-if __name__ == "__main__":
-    query_states()
